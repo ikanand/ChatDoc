@@ -191,7 +191,7 @@ def handle_message(conv_id=None):
         #print(f"\n \n print memory: {history}")
 
         # Configure the LLM
-        KEY = "AIzaSyBTyMg6jm3KyW1bmF18osFggpiTUD3Ov08"
+        KEY = "<USE YOUR KEY>"
         llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0.0, api_key=KEY, stream=True)
 
         conversation = ConversationChain(llm=llm, memory=memory)
