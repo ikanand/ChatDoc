@@ -18,7 +18,7 @@ This project is a Flask-based web application that provides a chat interface wit
 
 ### Prerequisites
 
-1. Install Python (version 3.813.3 or later). Download it from [python.org](https://www.python.org).
+1. Install Python (version 3.13.3 or later). Download it from [python.org](https://www.python.org).
 2. Ensure `pip` is installed (Python's package manager).
 
 ---
