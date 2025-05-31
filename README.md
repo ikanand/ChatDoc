@@ -18,7 +18,7 @@ This project is a Flask-based web application that provides a chat interface wit
 
 ### Prerequisites
 
-1. Install Python (version 3.813.3 or later). Download it from [python.org](https://www.python.org).
+1. Install Python (version 3.13.3 or later). Download it from [python.org](https://www.python.org).
 2. Ensure `pip` is installed (Python's package manager).
 
 ---
@@ -27,8 +27,8 @@ This project is a Flask-based web application that provides a chat interface wit
 
 Clone the repository to your local system using `git`:
 ```bash
-git clone https://github.com/yourusername/your_project.git
-cd your_project
+git clone [[https://github.com/ikanand/ChatDoc.git]()](https://github.com/ikanand/ChatDoc.git)
+cd ChatDoc
 ```
 
 ---
