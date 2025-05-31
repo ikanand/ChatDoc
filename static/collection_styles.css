@@ -1,0 +1,164 @@
+/* General styling for dark theme */
+body.dark-theme {
+    background-color: #202124;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Layout styling */
+.main-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar for indexed files */
+.sidebar {
+    width: 250px;
+    background-color: #28292c;
+    border-right: 1px solid #333;
+    overflow-y: auto;
+    transition: width 0.3s ease;
+}
+
+.sidebar h2 {
+    margin: 0;
+    padding: 10px;
+    background-color: #333333;
+    color: #ffffff;
+    border-bottom: 1px solid #444;
+    text-align: center;
+}
+
+#file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    border-radius: 20px;
+    border: 1px solid #444;
+    margin: 5px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1c1c1c;
+    color: #cccccc;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
+}
+
+.file-item:hover {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.file-name {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.delete-icon {
+    color: #fcfbfb;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+}
+
+.delete-icon:hover {
+    color: #ff0000;
+}
+
+.no-files-message {
+    text-align: center;
+    color: #cccccc;
+    padding: 10px;
+}
+
+/* Main content styling */
+.content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+h1,
+h2 {
+    color: #ffffff;
+    margin: 0 0 20px;
+}
+
+hr {
+    border: 1px solid #444;
+    margin: 20px 0;
+}
+
+/* Forms Styling */
+.form-section {
+    margin-bottom: 20px;
+}
+
+input,
+button {
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+input:focus,
+button:hover {
+    background-color: #444;
+}
+
+/* Search Results */
+#search-results {
+    margin-top: 20px;
+}
+
+
+#search-results h3 {
+    color: #ffffff;
+}
+
+#search-results div {
+    background-color: #28292c;
+    padding: 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#search-results div h4 {
+    margin: 0;
+    color: #ffffff;
+}
+
+#search-results div p {
+    color: #cccccc;
+}
+
+/* Messages Styling */
+#message {
+    margin-top: 10px;
+    color: #ffcccc;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #222;
+}

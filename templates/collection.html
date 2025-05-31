@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Collection</title>
+    <link rel="stylesheet" href="/static/collection_styles.css">
+</head>
+<body class="dark-theme">
+    <div class="main-container">
+        <!-- Sidebar for indexed files -->
+        <div class="sidebar">
+            <h2>Collections</h2>
+            <ul id="file-list">
+                <!-- Indexed files with delete icons will be dynamically added here -->
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="content">
+            <h1>PDF Collection</h1>
+
+            <!-- Upload Section -->
+            <form id="upload-form" enctype="multipart/form-data" class="form-section">
+                <label for="file-input">Upload a PDF file (Max 200MB):</label>
+                <input type="file" id="file-input" name="pdf" required>
+                <button type="button" id="upload-button">Upload and Index</button>
+            </form>
+            <div id="message"></div>
+
+            <hr>
+
+            <!-- Search Section -->
+            <h2>Search PDF Content</h2>
+            <form id="search-form" class="form-section">
+                <input type="text" id="search-input" placeholder="Enter search keywords" required>
+                <button type="button" id="search-button">Search</button>
+            </form>
+            <div id="search-results">
+                <!-- Search results will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/collection_script.js"></script>
+</body>
+</html>

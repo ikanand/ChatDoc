@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatGPT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        /* Basic styling for LLM messages and their Markdown content */
+        .llm-message {
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 10px; /* Space between messages */
+            text-align: left; /* Ensure text alignment is left for LLM */
+            overflow-wrap: break-word; /* Prevents overflow for long words */
+            word-break: break-word; /* Breaks words to prevent overflow in pre-wrap */
+            max-width: 80%; /* Example: LLM messages take up 80% width */
+            align-self: flex-start; /* Align to the start in a flex container */
+        }
+
+        /* Styling for Markdown elements within .llm-message */
+        .llm-message h1,
+        .llm-message h2,
+        .llm-message h3,
+        .llm-message h4,
+        .llm-message h5,
+        .llm-message h6 {
+            margin-top: 1em;
+            margin-bottom: 0.5em;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+        .llm-message h1 { font-size: 2em; border-bottom: 2px solid #eee; padding-bottom: 0.3em; }
+        .llm-message h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em; }
+        .llm-message h3 { font-size: 1.2em; }
+        .llm-message p {
+            margin-bottom: 1em;
+            line-height: 1.5;
+        }
+        .llm-message ul,
+        .llm-message ol {
+            margin-left: 20px;
+            margin-bottom: 1em;
+            padding-left: 0; /* Remove default padding for lists */
+        }
+        .llm-message li {
+            margin-bottom: 0.5em;
+        }
+        .llm-message a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .llm-message a:hover {
+            text-decoration: underline;
+        }
+        .llm-message strong {
+            font-weight: bold;
+        }
+        .llm-message em {
+            font-style: italic;
+        }
+        .llm-message blockquote {
+            border-left: 4px solid #ccc;
+            margin-left: 0;
+            padding-left: 1em;
+            color: #666;
+        }
+        .llm-message pre {
+            background-color: #2c2b2b;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto; /* For long lines of code */
+            white-space: pre-wrap; /* Preserves whitespace and wraps long lines */
+            word-break: break-all; /* Breaks words to prevent overflow */
+        }
+        .llm-message code {
+             font-family: 'Fira Code', 'IBM Plex Mono', 'Courier New', monospace;
+            background-color: #2c2b2b; /* Lighter background for inline code */
+            padding: 2px 4px;
+            border-radius: 3px;
+            color: rgb(84, 109, 157); /* Reddish color for inline code */
+        }
+        .llm-message pre code {
+             font-family: 'Fira Code', 'IBM Plex Mono', 'Courier New', monospace;
+            background-color: transparent; /* No extra background for code inside pre */
+            padding: 0;
+            color: inherit; /* Inherit color from pre */
+        }
+        .llm-message table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1em;
+        }
+        .llm-message th,
+        .llm-message td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        .llm-message th {
+            background-color: #f0f0f0;
+        }
+        .llm-message hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 1em 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar collapsed ">
+        <div class="tooltip">
+            <span class="tooltiptext">Open Sidebar</span>
+            <button id="sidebar-toggle"><i class="fa-solid fa-bars-staggered"></i></button>
+        </div>
+        <div class="sidebar-content">
+            <button id="new-conversation-btn">
+                 <i class="fas fa-edit"></i>   Start New Conversation
+                 </button>
+            <div class="conversation-list">
+                <div class="conversation">
+                    <p class="conversation-text">Recent:</p>
+                    <div class="conversation-content" id="conversations-list" >No conversation yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat-container">
+        <div class="chat-content">
+            <div class="chat-header">
+                <div class="logo-container">
+                    <h1>Chat With AI assistant</h1>
+                </div>
+            </div>
+            <div class="chat-box" id="chat-box">
+
+            </div>
+            <div class="input-container">
+                <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+                <button id="send-button"><i class='fas fa-location-arrow'></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+
+    <script>
+        // Set Marked.js options (optional, but good practice)
+        marked.setOptions({
+            gfm: true,        // Enable GitHub Flavored Markdown (tables, task lists, etc.)
+            breaks: true,     // Convert newlines to <br> tags (useful for chat)
+            // IMPORTANT: Sanitize HTML to prevent XSS attacks.
+            // Marked.js's built-in sanitize is basic. For higher security, use DOMPurify.
+            sanitize: true    // Basic sanitization from Marked.js
+        });
+
+        /**
+         * Converts the text content of a single .llm-message element to HTML.
+         * @param {HTMLElement} messageElement The DOM element containing the raw Markdown.
+         */
+        function convertSingleLLMMessage(messageElement) {
+            // Check if the message has already been converted to prevent reprocessing
+            if (messageElement.dataset.converted) {
+                return;
+            }
+
+            const markdownText = messageElement.textContent;
+            let html = marked.parse(markdownText);
+
+            // OPTIONAL: For robust security, use DOMPurify to sanitize the HTML.
+            // Uncomment the line below if you trust DOMPurify more than marked.js's built-in sanitizer
+            // and have loaded DOMPurify.
+            // html = DOMPurify.sanitize(html);
+
+            messageElement.innerHTML = html;
+            messageElement.dataset.converted = 'true'; // Mark as converted
+        }
+
+        /**
+         * Function to initialize conversion for existing chat history on page load.
+         */
+        function convertExistingLLMMessages() {
+            console.log("Converting existing LLM messages...");
+            const llmMessages = document.querySelectorAll('.llm-message');
+            llmMessages.forEach(convertSingleLLMMessage);
+            console.log("Existing LLM messages converted.");
+        }
+
+        /**
+         * Observes the chat-box for new child nodes (new messages).
+         * If a new .llm-message is added, it converts its content.
+         */
+        function observeNewLLMMessages() {
+            const chatBox = document.getElementById('chat-box');
+
+            // Options for the observer (what to watch for)
+            const config = { childList: true, subtree: true };
+
+            // Callback function to execute when mutations are observed
+            const callback = function(mutationsList, observer) {
+                for (const mutation of mutationsList) {
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(node => {
+                            // Case 1: The added node itself is an .llm-message
+                            if (node.nodeType === Node.ELEMENT_NODE && node.classList.contains('llm-message')) {
+                                console.log("New LLM message direct child detected:", node);
+                                convertSingleLLMMessage(node);
+                            }
+                            // Case 2: A parent element was added that contains .llm-message
+                            // This handles cases where a wrapper div is added containing the message
+                            else if (node.nodeType === Node.ELEMENT_NODE) {
+                                const newLLMMessagesInside = node.querySelectorAll('.llm-message');
+                                newLLMMessagesInside.forEach(llmMsg => {
+                                    convertSingleLLMMessage(llmMsg); // Function handles double conversion
+                                });
+                            }
+                        });
+                    }
+                }
+            };
+
+            // Create an observer instance linked to the callback function
+            const observer = new MutationObserver(callback);
+
+            // Start observing the target node for configured mutations
+            observer.observe(chatBox, config);
+            console.log("MutationObserver started for new LLM messages.");
+        }
+
+        // --- Execution Flow ---
+        // 1. Convert all existing messages when the DOM is fully loaded.
+        document.addEventListener('DOMContentLoaded', () => {
+            convertExistingLLMMessages();
+            // 2. Start observing for new messages after initial conversion
+            observeNewLLMMessages();
+        });
+
+        // --- IMPORTANT: Ensure your existing script.js correctly adds new messages to the chat-box with class 'llm-message' ---
+        // For example, if your script.js has a function to add messages, it might look like this:
+        /*
+        function appendMessage(messageContent, messageType) {
+            const chatBox = document.getElementById('chat-box');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', messageType); // e.g., 'llm-message' or 'user-message'
+            messageDiv.textContent = messageContent; // Use textContent for raw Markdown
+
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+        }
+
+        // When you receive an LLM response:
+        // appendMessage(llmResponseMarkdownText, 'llm-message');
+        */
+    </script>
+</body>
+</html>

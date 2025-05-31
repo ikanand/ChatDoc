@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "type": "human",
+      "data": {
+        "content": "different types of llm",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "human",
+        "name": null,
+        "id": null,
+        "example": false
+      }
+    },
+    {
+      "type": "ai",
+      "data": {
+        "content": "The different types of LLMs are distinguished based on their intended use. There are Language Models (LMs), Pre-trained Language Models (PLMs), and Large Language Models (LLMs). LLMs like GPT-3.5 are designed for multi-purpose use and exhibit emergent abilities.\n\n**Citation**: <a href=\"http://127.0.0.1:5000/uploads/LLM.pdf\" target=\"_blank\" rel=\"noopener noreferrer\">LLM.pdf</a> page 6",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "ai",
+        "name": null,
+        "id": null,
+        "example": false,
+        "tool_calls": [],
+        "invalid_tool_calls": [],
+        "usage_metadata": null
+      }
+    }
+  ]
+}
