@@ -27,8 +27,8 @@ This project is a Flask-based web application that provides a chat interface wit
 
 Clone the repository to your local system using `git`:
 ```bash
-git clone [https://github.com/yourusername/your_project.git](https://github.com/ikanand/ChatDoc.git)
-cd your_project
+git clone [https://github.com/ikanand/ChatDoc.git](https://github.com/ikanand/ChatDoc.git)
+cd ChatDoc
 ```
 
 ---
