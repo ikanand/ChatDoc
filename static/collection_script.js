@@ -79,6 +79,9 @@ async function uploadFile() {
         return;
     }
 
+    spinner.style.display = 'block';
+    messageDiv.textContent = ''; // Clear the message div
+
     const formData = new FormData();
     formData.append('pdf', file);
 
@@ -98,6 +101,9 @@ async function uploadFile() {
     } catch (error) {
         messageDiv.textContent = "Error uploading file.";
         console.error(error);
+    }finally {
+        // Hide the spinner after uploading
+        spinner.style.display = 'none';
     }
 }
 
@@ -108,6 +114,8 @@ async function searchFiles() {
     const query = searchInput.value.trim();
 
     searchResultsDiv.innerHTML = ""; // Clear previous results
+    spinner2.style.display = 'block';
+  
 
     if (!query) {
         searchResultsDiv.textContent = "Please enter search keywords.";
@@ -135,6 +143,9 @@ async function searchFiles() {
         }
     } catch (error) {
         searchResultsDiv.textContent = "Error searching files.";
+    }finally {
+        // Hide the spinner after uploading
+        spinner2.style.display = 'none';
     }
 }
 

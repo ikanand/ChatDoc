@@ -110,12 +110,20 @@ async function loadConversation(existingConvId) {
 let convId = null; // Global variable to track the conversation ID
 
 async function sendMessage() {
+    
+    const userInput = document.getElementById('user-input');
     const message = userInput.value.trim();
+    const sendButton = document.getElementById('send-button');
+    const sendIcon = sendButton.querySelector('i'); // Get the send plane icon
+    const spinner = document.getElementById('send-spinner'); // Get the spinner element
 
     if (message !== '') {
         appendMessage('user', message); // Add user input to the chat UI
         console.log('!Sending message:', message);
         console.log('!Current convId:', convId);
+
+        sendIcon.style.display = 'none';
+        spinner.style.display = 'block';
 
         try {
             // Make the API call asynchronously
@@ -136,7 +144,11 @@ async function sendMessage() {
                 console.error('Failed to parse response JSON:', err);
                 appendMessage('ChatGPT', `Error: Unable to read response from the server.`);
                 return;
-            }
+            }finally {
+        // Restore the send icon and hide the spinner
+        sendIcon.style.display = 'block';
+        spinner.style.display = 'none';
+    }
 
             if (response.ok) {
                 console.log('Backend response:', data);
