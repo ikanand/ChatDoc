@@ -60,7 +60,7 @@ async function deleteIndexedFile(filename) {
     if (!confirm(`Are you sure you want to delete "${filename}"?`)) return;
 
     try {
-        await fetchApi('/delete', 'POST', { filename });
+        await fetchApi('/deletecollection', 'POST', { filename });
         alert(`File "${filename}" deleted successfully.`);
         await loadIndexedFiles();
     } catch (error) {
