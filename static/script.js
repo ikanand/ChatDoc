@@ -20,6 +20,8 @@ sendButton.addEventListener('click', async () => {
 document.addEventListener('DOMContentLoaded', function () {
     const newConversationBtn = 
             document.getElementById('new-conversation-btn');
+    const viewCollectionBtn = 
+            document.getElementById('view-collection-btn');
     const conversationContent = 
             document.querySelector('.conversation-content');
     const sidebarToggle = 
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelector('.chat-container');
     const sidebar = 
             document.querySelector('.sidebar');
+    
 
     // Ensure the sidebar is expanded by default on load
     sidebar.classList.remove('collapsed');
@@ -51,6 +54,12 @@ document.addEventListener('DOMContentLoaded', function () {
     newConversationBtn.addEventListener('click', function () {
         window.location.href = '/';
         loadConversations(); // Reload conversations when a new conversation is started
+    });
+
+    // Add event listener for the view CollectionBtn button
+    viewCollectionBtn.addEventListener('click', function () {
+        window.open('/collection', '_blank');
+        
     });
 
 });

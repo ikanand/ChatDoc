@@ -206,10 +206,10 @@ def handle_message(conv_id=None):
            \n
            When providing citations or references to external files, generate clickable links in Markdown format. Make sure the links include embedded HTML with the target="_blank" attribute so that they open in a new tab or window. Use the following format:
           For a file named example.pdf located at http://127.0.0.1:5000/uploads/example.pdf, the link should appear as:
-           <a href="http://127.0.0.1:5000/uploads/example.pdf" target="_blank" rel="noopener noreferrer">example.pdf</a>
+           <a href="http://127.0.0.1:5000/uploads/example.pdf#page=page_number" target="_blank" rel="noopener noreferrer">example.pdf</a>
            Here are the referenced files:
-           1. <a href="http://127.0.0.1:5000/uploads/LLM.pdf" target="_blank" rel="noopener noreferrer">LLM.pdf</a>
-           2. <a href="http://127.0.0.1:5000/uploads/research_notes.docx" target="_blank" rel="noopener noreferrer">research_notes.docx</a>
+           1. <a href="http://127.0.0.1:5000/uploads/LLM.pdf#page=5" target="_blank" rel="noopener noreferrer">LLM.pdf</a>
+           2. <a href="http://127.0.0.1:5000/uploads/research_notes.docx#page=1" target="_blank" rel="noopener noreferrer">research_notes.docx</a>
            3. <a href="http://127.0.0.1:5000/uploads/image.png" target="_blank" rel="noopener noreferrer">image.png</a>
             '''
         
@@ -245,8 +245,12 @@ def handle_message(conv_id=None):
 def get_conversations():
     conversations = []  # List to store conversation ID and first truncated question
 
+    # Sort files in the directory by their last modification time (most recent first)
+    files = sorted(os.listdir(CONV_DIR), key=lambda f: os.path.getmtime(os.path.join(CONV_DIR, f)), reverse=True)
+
+
     # Traverse conversation log files
-    for filename in os.listdir(CONV_DIR):
+    for filename in files:
         if filename.endswith('.json'):
             conv_id = filename.split('.')[0]  # Extract conversation ID from filename
             file_path = os.path.join(CONV_DIR, filename)

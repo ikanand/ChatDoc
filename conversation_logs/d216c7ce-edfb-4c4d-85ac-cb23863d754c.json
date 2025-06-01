@@ -1,0 +1,31 @@
+{
+  "messages": [
+    {
+      "type": "human",
+      "data": {
+        "content": "get details of Adhaar info",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "human",
+        "name": null,
+        "id": null,
+        "example": false
+      }
+    },
+    {
+      "type": "ai",
+      "data": {
+        "content": "The Aadhaar information includes:\n\n*   Name: Arya A K\n*   Address: C/O: Anand Irappa Kakaraddi, Nrukesari Nilaya, Upparahalli Main Road, Behind Mukthamba Paramashivaiah Wedding Hall, S B M Layout, VTC: Tumkur, PO: Kuvempunagara, Sub District: Tumkur, District: Tumakuru, State: Karnataka, PIN Code: 572103\n*   Mobile: 8904459295\n*   Enrolment No.: 4050/00156/09620\n*   VID: 9119 1179 0316 3759\n*   Aadhaar no: 9769 2027 2871\n*   Date of Birth: 30/03/2022\n*   Gender: MALE\n*   Issued on: 19/02/2025\n\n**Citation**: <a href=\"http://127.0.0.1:5000/uploads/EAadhaar.pdf#page=1\" target=\"_blank\" rel=\"noopener noreferrer\">EAadhaar.pdf</a>",
+        "additional_kwargs": {},
+        "response_metadata": {},
+        "type": "ai",
+        "name": null,
+        "id": null,
+        "example": false,
+        "tool_calls": [],
+        "invalid_tool_calls": [],
+        "usage_metadata": null
+      }
+    }
+  ]
+}
