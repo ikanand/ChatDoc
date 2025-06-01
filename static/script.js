@@ -264,6 +264,15 @@ async function loadConversations() {
 
         // Add click handler to open the conversation when clicked
         conversationItem.addEventListener('click', () => {
+            const previousActiveItem = conversationsList.querySelector('.conversation-item.active');
+            if (previousActiveItem) {
+                previousActiveItem.classList.remove('active');
+                }
+
+          // Add 'active' class to the clicked conversation
+          conversationItem.classList.add('active');
+
+
           loadConversationHistory(conversation.id);
         });
 

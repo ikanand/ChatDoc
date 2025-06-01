@@ -1,8 +1,8 @@
 /* General styling for dark theme */
 body.dark-theme {
     background-color: #202124;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
+    color: #9ba3a6;
+    font-family: 'Nunito', 'Quicksand', 'Lato', sans-serif;
     margin: 0;
     padding: 0;
 }
@@ -24,11 +24,8 @@ body.dark-theme {
 }
 
 .sidebar h2 {
-    margin: 0;
+    margin: 10%;
     padding: 10px;
-    background-color: #333333;
-    color: #ffffff;
-    border-bottom: 1px solid #444;
     text-align: center;
 }
 
@@ -47,7 +44,7 @@ body.dark-theme {
     justify-content: space-between;
     align-items: center;
     background-color: #1c1c1c;
-    color: #cccccc;
+  
     transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
 }
@@ -90,7 +87,7 @@ body.dark-theme {
 
 h1,
 h2 {
-    color: #ffffff;
+    color: #9ba3a6;
     margin: 0 0 20px;
 }
 
@@ -113,11 +110,12 @@ button {
     background-color: #333;
     color: #ffffff;
     transition: background-color 0.3s ease;
+    font-weight: bold;
 }
 
 input:focus,
 button:hover {
-    background-color: #444;
+    background-color: #7d8d9663;
 }
 
 /* Search Results */
