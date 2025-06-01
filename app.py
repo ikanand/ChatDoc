@@ -8,6 +8,7 @@ from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import AIMessage, HumanMessage
 import json
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -190,8 +191,9 @@ def handle_message(conv_id=None):
         memory = ConversationBufferMemory(chat_memory=history, return_messages=True)
         #print(f"\n \n print memory: {history}")
 
-        # Configure the LLM
-        KEY = "<USE YOUR KEY>"
+        #need to load from .env file
+        KEY= os.getenv("API_KEY")
+
         llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash-lite", temperature=0.0, api_key=KEY, stream=True)
 
         conversation = ConversationChain(llm=llm, memory=memory)
