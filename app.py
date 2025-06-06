@@ -176,6 +176,8 @@ def handle_message(conv_id=None):
     elif request.method == 'POST':
         data = request.json
         user_message = data.get('message', '')
+        knowledge_mode = data.get('knowledge', 'org')  # Default to 'org'
+
 
         if not user_message.strip():  # If no user message is provided
             return jsonify({
@@ -201,7 +203,8 @@ def handle_message(conv_id=None):
         system_message = f'''You are a helpful assistant. Answer the user's questions based on the provided context.
             If the user message is greetings,thank you etc, please provide the answer without reffering to the context.
             If the user message apart that , then try to provide the answer based only on the context provided, else say "I cannot provide you the answer for this question based on the files uploaded."
-            ANswer should be precision and with the citation of the file name and page number.
+            Answer should be precision and with the citation of the file name and page number.
+            If the conetext is empty, then proviede the answer based on your world knowledge.
             Add the citation in the end of the answer like this: "\n\n\n\n**Citation**: 'filename' page 'page_number'".
            \n
            When providing citations or references to external files, generate clickable links in Markdown format. Make sure the links include embedded HTML with the target="_blank" attribute so that they open in a new tab or window. Use the following format:
@@ -213,8 +216,13 @@ def handle_message(conv_id=None):
            3. <a href="http://127.0.0.1:5000/uploads/image.png" target="_blank" rel="noopener noreferrer">image.png</a>
             '''
         
-        document_content = "context fetched from the documents: " + str(utils.search_faiss(user_message))
-        print(f"\n \n Document content: {document_content}")
+        #document_content = "context fetched from the documents: " + str(utils.search_faiss(user_message))
+        
+        if knowledge_mode == "org":
+            document_content = "context fetched from the documents: " + str(utils.search_faiss(user_message))
+            #print(f"\n \n Document content: {document_content}")
+        else:  # world knowledge
+            document_content = ""  # No context from org docs
 
         # Combine System Message and Document Content to Create a Context
         context = f"{system_message}\n\n{document_content}"
