@@ -19,7 +19,8 @@ body.dark-theme {
     width: 250px;
     background-color: #28292c;
     border-right: 1px solid #333;
-    overflow-y: auto;
+    overflow-y: scroll;
+    scrollbar-color: #202124 #28292c;
     transition: width 0.3s ease;
 }
 
@@ -33,6 +34,9 @@ body.dark-theme {
     list-style: none;
     padding: 0;
     margin: 0;
+        overflow-y: scroll;
+    height: 80vh;
+    scrollbar-width: none;
 }
 
 .file-item {
@@ -82,7 +86,8 @@ body.dark-theme {
 .content {
     flex: 1;
     padding: 20px;
-    overflow-y: auto;
+    overflow-y: scroll;
+    scrollbar-color: #202124 #28292c;
 }
 
 h1,
