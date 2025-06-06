@@ -443,3 +443,17 @@ pre {
   background-color: #3b4048; /* Light blue background */
     color: #ffffff; /* White text for active item */
 }
+
+#knowledge-select {
+    min-width: 120px;
+    background: #28292c;
+    color: #fff;
+    border: 1px solid #444;
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-size: 14px;
+    outline: none;
+    position: absolute;
+    left: 9%;
+    bottom: 20%;
+}

@@ -116,6 +116,7 @@ async function sendMessage() {
     const sendButton = document.getElementById('send-button');
     const sendIcon = sendButton.querySelector('i'); // Get the send plane icon
     const spinner = document.getElementById('send-spinner'); // Get the spinner element
+    const knowledgeSelect = document.getElementById('knowledge-select');
 
     if (message !== '') {
         appendMessage('user', message); // Add user input to the chat UI
@@ -130,7 +131,9 @@ async function sendMessage() {
             const response = await fetch(`/message/${convId || 'null'}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message }) // Send the user's input
+                body: JSON.stringify({ message,
+                    knowledge: knowledgeSelect.value 
+                 }) // Send the user's input
             });
             console.log('!response:', response);
 

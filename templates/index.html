@@ -143,13 +143,18 @@
             <div class="chat-box" id="chat-box">
 
             </div>
-            <div class="input-container">
+                        <div class="input-container">
+                <select id="knowledge-select" style="margin-right:10px; border-radius: 10px; padding: 6px;">
+                    <option value="org" selected>Org Knowledge</option>
+                    <option value="world">World Knowledge</option>
+                </select>
                 <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
                 <button id="send-button">
                     <i class="fa-sharp fa-solid fa-paper-plane"></i>
                     <div class="spinner" id="send-spinner"></div>                
                 </button>
             </div>
+
         </div>
     </div>
 
