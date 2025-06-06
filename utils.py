@@ -23,7 +23,7 @@ def extract_clean_text_from_pdf(pdf_path):
     return pages
 
 
-def chunk_pdf_pages(pages, chunk_size=500, chunk_overlap=50):
+def chunk_pdf_pages(pages, chunk_size=1000, chunk_overlap=50):
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
@@ -114,7 +114,13 @@ def delete_pdf_from_index(filename_to_delete):
             new_embeddings.append(embeddings[i])
 
     new_embeddings = np.array(new_embeddings)
-    index = build_faiss_index(new_embeddings)
+    if new_embeddings.shape[0] == 0:
+        # If no embeddings left, create an empty index with the correct dimension
+        # Try to infer dimension from previous embeddings or default to 768
+        dim = embeddings.shape[1] if embeddings.shape[0] > 0 else 768
+        index = faiss.IndexFlatL2(dim)
+    else:
+        index = build_faiss_index(new_embeddings)
 
     faiss.write_index(index, INDEX_PATH)
     save_metadata(new_metadata)
