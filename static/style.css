@@ -25,6 +25,7 @@ body {
     left: 0;
     z-index: 1;
     overflow-x: hidden;
+    overflow-y: hidden;
     transition: width 0.3s;
 }
 
@@ -107,6 +108,12 @@ body {
 
 .conversation-content {
     color: #bdc1c6;
+    overflow-y: scroll;
+    height: 65vh;
+    scrollbar-width: none;
+    
+    
+
 }
 
 #new-conversation-btn {
@@ -267,6 +274,8 @@ input:checked+.slider:before {
     padding: 15px;
     margin-left: 5%;
     margin-right: 5%;
+    overflow-y: scroll;
+    scrollbar-width: none;
 }
 
 .chat-box p {
