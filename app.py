@@ -220,18 +220,20 @@ def handle_message(conv_id=None):
         
         if knowledge_mode == "org":
             document_content = "context fetched from the documents: " + str(utils.search_faiss(user_message))
+             # Combine System Message and Document Content to Create a Context
+            context = f"{system_message}\n\n{document_content}"
             #print(f"\n \n Document content: {document_content}")
         else:  # world knowledge
             document_content = ""  # No context from org docs
+            context="Please answer the question based on your world knowledge. If you don't know the answer, say 'I don't know'."
 
-        # Combine System Message and Document Content to Create a Context
-        context = f"{system_message}\n\n{document_content}"
+
 
 
 
         # Get response from the LLM
         try:
-            llm_response = conversation.run(input=f"{context}\n\n User: {user_message}")
+            llm_response = conversation.run(input=f"{context}\n\n User Question: {user_message}")
             #llm_response = conversation.chain.llm_chain.llm.predict(f"{context}\n\n User: {user_message}")
             #llm_response = conversation.predict(input=f"{context}\n\n User: {user_message}")
         except Exception as e:
@@ -292,5 +294,36 @@ def serve_file(filename):
             return "File not found", 404
     except Exception as e:
         return f"Error processing file: {str(e)}", 500
+    
+
+
+@app.route('/delete_conversation', methods=['POST'])
+def delete_conversation():
+    """
+    Delete a conversation by convId (conversation ID).
+    Expects JSON: { "id": "<convId>" }
+    """
+    try:
+        data = request.get_json()
+        conv_id = data.get('id', '').strip()
+        if not conv_id:
+            return jsonify({'message': 'Conversation ID is required.'}), 400
+
+        file_path = os.path.join(CONV_DIR, f"{conv_id}.json")
+        if os.path.exists(file_path):
+            os.remove(file_path)
+            return jsonify({'message': f'Conversation {conv_id} deleted successfully.'}), 200
+        else:
+            return jsonify({'message': 'Conversation file not found.'}), 404
+    except Exception as e:
+        return jsonify({'message': f'An error occurred: {str(e)}'}), 500
+    
+
+
+
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)

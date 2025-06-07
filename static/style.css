@@ -110,11 +110,10 @@ body {
     color: #bdc1c6;
     overflow-y: scroll;
     height: 65vh;
-    scrollbar-width: none;
-    
-    
+    scrollbar-width: none;   
 
 }
+
 
 #new-conversation-btn {
 cursor: pointer;
@@ -439,6 +438,13 @@ pre {
   text-overflow: ellipsis;
    white-space: nowrap; 
 }
+.conversation-item span {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10%; /* width of button + 2px gap (e.g. 24px icon + 2px + 2px extra) */
+}
 
 /* Hover Effect */
 .conversation-item:hover {
@@ -453,6 +459,7 @@ pre {
     color: #ffffff; /* White text for active item */
 }
 
+
 #knowledge-select {
     min-width: 120px;
     background: #28292c;
@@ -465,4 +472,23 @@ pre {
     position: absolute;
     left: 9%;
     bottom: 20%;
+}
+
+.delete-conv-btn {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #9ba3a6;
+  cursor: pointer;
+  padding: 0;
+  font-size: 16px;
+  z-index: 2;
+}
+
+
+.delete-conv-btn:hover i {
+  color: #fe0000 !important;        /* Red icon color for the <i> */
 }
