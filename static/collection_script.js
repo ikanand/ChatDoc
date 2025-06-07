@@ -39,8 +39,7 @@ async function loadIndexedFiles() {
                 fileNameSpan.className = 'file-name';
 
                 const deleteIcon = document.createElement('span');
-                deleteIcon.innerHTML = "&#128465;"; // Trash can icon
-                deleteIcon.className = 'delete-icon';
+                deleteIcon.className = 'fa fa-trash delete-icon';
                 deleteIcon.title = "Delete file";
                 deleteIcon.onclick = () => deleteIndexedFile(file);
 

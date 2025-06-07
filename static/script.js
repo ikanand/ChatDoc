@@ -259,6 +259,22 @@ function getRandomNumber(min, max) {
 }
 
 
+function deleteConversation(convId) {
+  fetch('/delete_conversation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: convId })
+  })
+  .then(res => res.json())
+  .then(() => {
+    loadConversations();
+  })
+  .catch(err => {
+    alert('Failed to delete conversation');
+    console.error(err);
+  });
+}
+
 async function loadConversations() {
   const conversationsList = document.getElementById('conversations-list');
 
@@ -273,9 +289,35 @@ async function loadConversations() {
       // Loop through the conversations and create a UI element for each
       data.forEach(conversation => {
         const conversationItem = document.createElement('div');
-        conversationItem.textContent = `${conversation.first_question}`;
+        //conversationItem.textContent = `${conversation.first_question}`;
         conversationItem.classList.add('conversation-item');
         conversationItem.setAttribute('data-id', conversation.id);
+        conversationItem.style.position = 'relative'; // Make it a positioning context
+
+        // Conversation text
+    const textSpan = document.createElement('span');
+    textSpan.textContent = conversation.first_question;
+
+        // Delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.innerHTML = '<i class="fa fa-trash"></i>';
+    deleteBtn.className = 'delete-conv-btn';
+    deleteBtn.title = 'Delete conversation';
+    deleteBtn.style.position = 'absolute';
+    deleteBtn.style.right = '5px';
+    deleteBtn.style.top = '50%';
+    deleteBtn.style.transform = 'translateY(-50%)';
+    deleteBtn.style.background = 'none';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.style.color = '#9ba3a6';
+    deleteBtn.style.padding = '0';
+
+    deleteBtn.addEventListener('click', (event) => {
+      event.stopPropagation();
+      deleteConversation(conversation.id);
+    });
+
 
         // Add click handler to open the conversation when clicked
         conversationItem.addEventListener('click', () => {
@@ -291,7 +333,9 @@ async function loadConversations() {
           loadConversationHistory(conversation.id);
         });
 
-        conversationsList.appendChild(conversationItem);
+            conversationItem.appendChild(textSpan);
+            conversationItem.appendChild(deleteBtn);
+            conversationsList.appendChild(conversationItem);
       });
     } else {
       // If no conversations are available, show a placeholder message
